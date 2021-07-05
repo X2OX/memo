@@ -17,6 +17,8 @@ func Router() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()
 	engine.TrustedProxies = []string{"127.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12", "10.0.0.0/8"}
+	engine.NoRoute(func(c *gin.Context) { c.Status(http.StatusNotFound) })
+	engine.NoMethod(func(c *gin.Context) { c.Status(http.StatusNotFound) })
 
 	log = blackdatura.With("gin router")
 	engine.Use(blackdatura.Ginzap(log))
@@ -47,11 +49,11 @@ func authAction() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		ts, err := c.Cookie("Token")
 		if err != nil {
-			c.AbortWithStatus(http.StatusUnauthorized)
+			c.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 		if tk := model.ParseToken(ts); tk == nil || !tk.Valid() {
-			c.AbortWithStatus(http.StatusUnauthorized)
+			c.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 		c.Next()
