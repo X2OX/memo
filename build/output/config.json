@@ -1,0 +1,16 @@
+{
+    "database":"db.db",
+    "domain":"https://domain.com",
+    "listen_addr":":8088",
+    "data_folder":"/data/memo/",
+    "log_level":"error",
+    "telegram_id":123456789,
+    "telegram_token":"123456789:abc",
+    "telegram_webhook":"/telegram/webhook",
+    "token":{
+        "auto_update":0,
+        "preview":10,
+        "view":0,
+        "share":1
+    }
+}
